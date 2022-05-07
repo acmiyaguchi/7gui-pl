@@ -2,25 +2,22 @@
 
 :- initialization main.
 
-:- dynamic count/1.
-
 counter :-
     new(D, dialog('Counter')),
-    count(Count),
-    send(D, append, new(CountItem, text_item(count, Count))),
-    send(D, append, button(ok, message(@prolog, update_count, CountItem))),
-    send(D, default_button, ok),
+    new(CountItem, text_item(count, 0)),
+    send(CountItem, type, int),
+    send(CountItem, length, 12),
+    send(CountItem, show_label, @off),
+    send(D, append, CountItem),
+    send(D, append, button(count, message(@prolog, update_count, CountItem)), right),
     get(D, confirm, Value),
     Value \== @nil.
 
 update_count(CountItem) :-
     get(CountItem, selection, Value),
-    retract(count(_)),
     NewValue is Value + 1,
-    assert(count(NewValue)),
     send(CountItem, clear),
     send(CountItem, selection, NewValue).
 
 main:-
-    assert(count(0)),
     counter.
