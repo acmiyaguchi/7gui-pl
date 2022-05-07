@@ -1,19 +1,12 @@
 :- use_module(library(pce)).
 
-:- initialization main.
+:- initialization counter(_).
 
-ask_name(Name) :-
-    new(D, dialog('Register')),
-    send(D, append(new(NameItem, text_item(name)))),
-    send(D, append(button(ok, message(D, return,
-                                      NameItem?selection)))),
-    send(D, append(button(cancel, message(D, return, @nil)))),
+counter(Value) :-
+    new(D, dialog('Counter')),
+    send(D, append, new(CountItem, text_item(count))),
+    send(D, append, button(ok, message(D, return, CountItem?selection))),
     send(D, default_button(ok)),
-    get(D, confirm, Rval),
+    get(D, confirm, Value),
     free(D),
-    Rval \== @nil,
-    Name = Rval.
-
-main :-
-    ask_name(Name),
-    write(Name).
+    Value \== @nil.
