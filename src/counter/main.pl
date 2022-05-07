@@ -16,12 +16,10 @@ counter :-
     send(D, append, CountItem),
     % Add a callback to update the value of the text_item.
     send(D, append, button(count, message(@prolog, update_count, CountItem)), right),
-    get(D, confirm, Value),
-    Value \== @nil.
+    get(D, confirm, _).
 
 % Clear and update the value of the text_item by the value incremented by 1.
 update_count(CountItem) :-
     get(CountItem, selection, Value),
     NewValue is Value + 1,
-    send(CountItem, clear),
     send(CountItem, selection, NewValue).
