@@ -18,3 +18,7 @@ swipl-win main.pl
 ### counter
 
 ![counter](figures/counter.png)
+
+### temperature-converter
+
+![temperature-converter](figures/temperature-converter.png)
